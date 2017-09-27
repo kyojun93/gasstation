@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity
         GasIF.setOnClickListener(this);
         NearbyGS.setOnClickListener(this);
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
