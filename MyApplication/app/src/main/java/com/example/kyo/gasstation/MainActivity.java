@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
                 i = new Intent(MainActivity.this, LocalGS.class);
                 break;
             case R.id.Card:
-                i = new Intent(MainActivity.this, CardIF.class);
+                i = new Intent(MainActivity.this, map.class);
                 break;
             case R.id.InterestGS:
                 i = new Intent(MainActivity.this, InterestGS.class);
