@@ -1,13 +1,9 @@
 package com.example.kyo.gasstation;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 /**
@@ -31,23 +27,23 @@ public class drawer  extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-
+        Intent i = new Intent();
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+             i = new Intent(this, NearbyGS.class);
         } else if (id == R.id.nav_gallery) {
-
+            i = new Intent(this, LocalGS.class);
         } else if (id == R.id.nav_slideshow) {
-
+            i = new Intent(this, map.class);
         } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            i = new Intent(this, InterestGS.class);
+        }else if (id == R.id.nav_manage1) {
+            i = new Intent(this, GasIf.class);
+        }else if (id == R.id.nav_manage2) {
+            i = new Intent(this, map.class);
         }
+        startActivity(i);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return super.onOptionsItemSelected(item);
+
     }
 }

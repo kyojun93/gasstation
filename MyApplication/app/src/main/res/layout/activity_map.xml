@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.kyo.gasstation.map">
-    <com.nhn.android.maps.NMapView
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/mMapView">
-    </com.nhn.android.maps.NMapView>
+        android:id="@+id/MapContainer"
+        android:orientation="horizontal">
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

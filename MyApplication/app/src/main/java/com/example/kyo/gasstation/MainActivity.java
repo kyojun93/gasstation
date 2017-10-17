@@ -2,6 +2,7 @@ package com.example.kyo.gasstation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,7 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends drawer
         implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
     private Button LocalGS,InterestGS,NearbyGS,CardIF,GasIF;
     @Override
@@ -35,8 +36,6 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -50,42 +49,20 @@ public class MainActivity extends AppCompatActivity
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
     @Override
     public void onClick(View v){
-        Intent i = new Intent();
-        switch (v.getId()){
-            case R.id.NearbyGS:
-                i = new Intent(MainActivity.this, NearbyGS.class);
-                break;
-            case R.id.LocalGS:
-                i = new Intent(MainActivity.this, LocalGS.class);
-                break;
-            case R.id.Card:
-                i = new Intent(MainActivity.this, map.class);
-                break;
+            Intent i = new Intent();
+            switch (v.getId()){
+                case R.id.NearbyGS:
+                    i = new Intent(MainActivity.this, com.example.kyo.gasstation.NearbyGS.class);
+                    break;
+                case R.id.LocalGS:
+                    i = new Intent(MainActivity.this, LocalGS.class);
+                    break;
+                case R.id.Card:
+                    i = new Intent(MainActivity.this, map.class);
+                    break;
             case R.id.InterestGS:
                 i = new Intent(MainActivity.this, InterestGS.class);
                 break;

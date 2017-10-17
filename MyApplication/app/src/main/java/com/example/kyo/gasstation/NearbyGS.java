@@ -11,13 +11,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+
+import com.example.kyo.gasstation.R;
+import com.example.kyo.gasstation.drawer;
 
 public class NearbyGS extends drawer implements View.OnClickListener {
     public Button SLGas, SLO, SLKm;
-    CharSequence gasinfo[] = new CharSequence[] {"휘발유", "경유", "LPG" };
+    ListView GasIFLV;
+    Intent i;
+    CharSequence gasstation[] = new CharSequence[] {"주유소"};
+    CharSequence gasinfo[] = new CharSequence[] {"휘발유", "경유"};
     CharSequence KM[] = new CharSequence[] {"1Km","3km", "5km", "10km" };
-    CharSequence O[] = new CharSequence[] {"최저가순", "가나다순","거리순" };
+    CharSequence O[] = new CharSequence[] {"최저가순" };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +35,15 @@ public class NearbyGS extends drawer implements View.OnClickListener {
         SLGas.setOnClickListener(this);
         SLO.setOnClickListener(this);
         SLKm.setOnClickListener(this);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, gasstation) ;
+        GasIFLV.setAdapter(adapter) ;
+        GasIFLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                i = new Intent(NearbyGS.this, map.class);
+                startActivity(i);
+            }
+        });
     }
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.NearbyGSLa);
@@ -48,9 +66,6 @@ public class NearbyGS extends drawer implements View.OnClickListener {
                                 break;
                             case 1:
                                 SLGas.setText(gasinfo[1]);
-                                break;
-                            case 2:
-                                SLGas.setText(gasinfo[2]);
                                 break;
                         }
                         dialog.dismiss();
@@ -90,12 +105,6 @@ public class NearbyGS extends drawer implements View.OnClickListener {
                             case 0:
                                 SLO.setText(O[0]);
                                 break;
-                            case 1:
-                                SLO.setText(O[1]);
-                                break;
-                            case 2:
-                                SLO.setText(O[2]);
-                                break;
                         }
                         dialog.dismiss();
                     }
@@ -105,11 +114,11 @@ public class NearbyGS extends drawer implements View.OnClickListener {
         }
     }
     public void init(){
+        GasIFLV = (ListView)findViewById(R.id.GasIFLV);
         SLGas =(Button)findViewById(R.id.SelectGas);
         SLO=(Button)findViewById(R.id.SelectO);
         SLKm=(Button)findViewById(R.id.SelectKM);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.NearbyGSLa);
