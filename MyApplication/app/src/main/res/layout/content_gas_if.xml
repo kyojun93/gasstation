@@ -42,7 +42,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="서울시 평균 가격"/>
+                android:text="서울 일일 평균"/>
                 <TableLayout
                     android:layout_marginTop="10dp"
                     android:layout_margin="10dp"
@@ -59,7 +59,7 @@
                         android:background="#ffffff"
                         android:gravity="center"
                         android:textColor="#000000"
-                        android:text="휘발유"
+                        android:hint="종류"
                         android:id="@+id/gasif_oil"
                         android:layout_margin="2dp"/>
                     <TextView
@@ -71,7 +71,7 @@
                         android:gravity="center"
                         android:textSize="24sp"
                         android:layout_marginTop="2dp"
-                        android:text="     -      " />
+                        android:hint="가격" />
                     <TextView
                         android:id="@+id/gasif_date"
                         android:textColor="#000000"
@@ -82,7 +82,7 @@
                         android:textSize="24sp"
                         android:background="#ffffff"
                         android:layout_margin="2dp"
-                        android:text="날짜" />
+                        android:hint="날짜" />
                 </TableRow>
             </TableLayout>
         </LinearLayout>
@@ -96,6 +96,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="서울시 유가 정보"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/gasif_local"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="지역 선택"
+                    android:textSize="20dp" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="분기별"
+                    android:textSize="20dp" />
+
+
+            </LinearLayout>
+                <com.jjoe64.graphview.GraphView
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:id="@+id/graph"
+                    android:layout_gravity="center"/>
 
         </LinearLayout>
     </LinearLayout>
