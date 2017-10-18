@@ -1,23 +1,26 @@
 package com.example.kyo.gasstation;
 
-import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,27 +34,51 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
-    String s,mJsonString;
-    GetData task;
-    ArrayList <HashMap<String,String>> hashlist;
-    private Button LocalGS,InterestGS,NearbyGS,CardIF,GasIF;
+
+public class LocalGSResult extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+    public Button LocalSelectGas, LocalSelectO;
+    ListView locallist;
+    Intent i;
+    String local;
+    String sort;
+    String oil = "gasoline";
+    String mJsonString,s;
+    ArrayList<HashMap<String, String>> list;
+    ArrayList<HashMap<String, String>> hashlist;
     DrawerLayout drawer;
-    int REQUEST_CODE_LOCATION;
+    CharSequence gasinfo[] = new CharSequence[] {"휘발유", "경유"};
+    CharSequence O[] = new CharSequence[] {"최저가순" };
+    GetData task;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_local_gsresult);
         init();
         newurl();
-        LocalGS.setOnClickListener(this);
-        InterestGS.setOnClickListener(this);
-        CardIF.setOnClickListener(this);
-        GasIF.setOnClickListener(this);
-        NearbyGS.setOnClickListener(this);
+        task = new GetData();
+        task.execute(s);
+        LocalSelectGas.setOnClickListener(this);
+        LocalSelectO.setOnClickListener(this);
+        locallist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                i = new Intent(LocalGSResult.this, map.class);
+                i.putExtra("hashlist", hashlist);
+                i.putExtra("center", position);
+                startActivity(i);
+            }
+        });
+        locallist.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                i = new Intent(LocalGSResult.this, gas_station_if.class);
+                i.putExtra("hashlist", hashlist);
+                i.putExtra("center", position);
+                startActivity(i);
+                return true;
+            }
+        });
     }
-    @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -59,57 +86,67 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-
-    @Override
     public void onClick(View v){
-            Intent i = new Intent();
-            switch (v.getId()){
-                case R.id.NearbyGS:
-                    i = new Intent(MainActivity.this, com.example.kyo.gasstation.NearbyGS.class);
-                    break;
-                case R.id.LocalGS:
-                    i = new Intent(MainActivity.this, LocalGS.class);
-                    break;
-                case R.id.Card:
-                    i = new Intent(MainActivity.this, CardIF.class);
-                    break;
-            case R.id.InterestGS:
-                i = new Intent(MainActivity.this, InterestGS.class);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        switch (v.getId()){
+            case R.id.LocalSelectGas:
+                builder.setItems(gasinfo, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch(which) {
+                            case 0:
+                                LocalSelectGas.setText(gasinfo[0]);
+                                oil = "gasoline";
+                                newurl();
+                                break;
+                            case 1:
+                                LocalSelectGas.setText(gasinfo[1]);
+                                oil = "diesel";
+                                newurl();
+                                break;
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
                 break;
-            case R.id.GasIF:
-                i = new Intent(MainActivity.this, GasIf.class);
-                //i = new Intent(MainActivity.this, GasIf.class);
+            case R.id.LocalSelectO:
+                builder.setItems(O, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch(which) {
+                            case 0:
+                                LocalSelectO.setText(O[0]);
+                                sort = oil;
+                                newurl();
+                                break;
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
                 break;
         }
-        startActivity(i);
+    }
+    public void newurl(){
+        s = "http://124.80.191.179:3000/local/'"+local+"'/"+sort;
+        Log.e("kyo",s);
+        list.clear();
+        task = new GetData();
+        task.execute(s);
     }
     public void init(){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // 사용자 권한 요청
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
-        }
+        sort = oil;
+        locallist = (ListView)findViewById(R.id.Locallist);
         hashlist = new ArrayList<>();
-        LocalGS=(Button)findViewById(R.id.LocalGS);
-        InterestGS=(Button)findViewById(R.id.InterestGS);
-        NearbyGS=(Button)findViewById(R.id.NearbyGS);
-        CardIF=(Button)findViewById(R.id.Card);
-        GasIF=(Button)findViewById(R.id.GasIF);
+        LocalSelectGas =(Button)findViewById(R.id.LocalSelectGas);
+        LocalSelectO=(Button)findViewById(R.id.LocalSelectO);
+        i = getIntent();
+        local = i.getStringExtra("local");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        list = new ArrayList<>();
+        drawer = (DrawerLayout) findViewById(R.id.local_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -117,7 +154,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         Intent i = new Intent();
@@ -133,20 +169,11 @@ public class MainActivity extends AppCompatActivity
             i = new Intent(this, GasIf.class);
         }else if (id == R.id.nav_manage2) {
             i = new Intent(this, map.class);
-            i.putExtra("hashlist", hashlist);
-            i.putExtra("center", -1);
         }
         startActivity(i);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void newurl(){
-        s = "http://124.80.191.179:3000/";
-        Log.e("kyo",s);
-        task = new GetData();
-        task.execute(s);
-    }
-
     private class GetData extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
         String errorString = null;
@@ -155,7 +182,7 @@ public class MainActivity extends AppCompatActivity
         protected void onPreExecute() {
             super.onPreExecute();
 
-            progressDialog = ProgressDialog.show(MainActivity.this,
+            progressDialog = ProgressDialog.show(LocalGSResult.this,
                     "Please Wait", null, true, true);
         }
 
@@ -208,7 +235,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
     private void showResult(){
         try {
             JSONArray jsonArray = new JSONArray(mJsonString);
@@ -216,21 +242,48 @@ public class MainActivity extends AppCompatActivity
             for(int i=0;i<jsonArray.length();i++){
 
                 JSONObject item = jsonArray.getJSONObject(i);
+
+                String area = item.getString("area");
+                String address = item.getString("address");
+                String brand = item.getString("brand");
+                String date = item.getString("date");
+                String gasoline =item.getString("gasoline");
+                String diesel = item.getString("diesel");
+                String name = item.getString("name");
                 String x = Double.toString(item.getDouble("x"));
                 String y = Double.toString(item.getDouble("y"));
-                String name = item.getString("name");
+                String price = Integer.toString(item.getInt(oil))+"원";
+                HashMap<String,String> hashMap = new HashMap<>();
                 HashMap<String,String> gashash = new HashMap<>();
                 gashash.put("name", name);
+                gashash.put("price", price);
                 gashash.put("x",x);
                 gashash.put("y",y);
 
+                gashash.put("area",area);
+                gashash.put("address",address);
+                gashash.put("brand",brand);
+                gashash.put("date",date);
+                gashash.put("gasoline",gasoline);
+                gashash.put("diesel",diesel);
+
+                hashMap.put("name", name);
+                hashMap.put("price", price);
+
                 hashlist.add(gashash);
+                list.add(hashMap);
             }
+
+            ListAdapter adapter = new SimpleAdapter(
+                    LocalGSResult.this, list, R.layout.listview_custom,
+                    new String[]{"name","price"},
+                    new int[]{R.id.name, R.id.price}
+            );
+
+            locallist.setAdapter(adapter);
 
         } catch (JSONException e) {
 
         }
-
     }
-
 }

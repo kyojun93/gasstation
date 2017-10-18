@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- WIFI 상태활용시 추가 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/gasstation"
@@ -25,6 +26,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -33,7 +35,15 @@
         <activity android:name=".CardIF" />
         <activity android:name=".InterestGS" />
         <activity android:name=".GasIf" />
-        <activity android:name=".map"/>
+        <activity android:name=".map" />
+        <activity
+            android:name=".LocalGSResult"
+            android:label="@string/title_activity_local_gsresult"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".gas_station_if"
+            android:label="@string/title_activity_gas_station_if"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

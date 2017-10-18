@@ -6,4 +6,6 @@
 
     <string name="action_settings">Settings</string>
     <string name="str_done">완료</string>
+    <string name="title_activity_local_gsresult">LocalGSResult</string>
+    <string name="title_activity_gas_station_if">gas_station_if</string>
 </resources>
