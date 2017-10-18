@@ -210,6 +210,7 @@ public class MainActivity extends AppCompatActivity
             for(int i=0;i<jsonArray.length();i++){
 
                 JSONObject item = jsonArray.getJSONObject(i);
+
                 String x = Double.toString(item.getDouble("x"));
                 String y = Double.toString(item.getDouble("y"));
                 String name = item.getString("name");

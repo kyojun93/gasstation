@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:gravity="center"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="20dp"
+            >
+            <Button
+                android:id="@+id/btngasoline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="휘발유"
+                android:textSize="20dp"
+                android:layout_marginRight="30dp"/>
+
+            <Button
+                android:id="@+id/btndiesel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="경 유"
+                android:textSize="20dp"
+                />
+            />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="서울시 평균 가격"/>
+                <TableLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:background="#c7c3c3"
+                    android:stretchColumns="*">
+                <TableRow>
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:background="#ffffff"
+                        android:gravity="center"
+                        android:textColor="#000000"
+                        android:text="휘발유"
+                        android:id="@+id/gasif_oil"
+                        android:layout_margin="2dp"/>
+                    <TextView
+                        android:id="@+id/gasif_price"
+                        android:background="#ffffff"
+                        android:layout_width="100dp"
+                        android:textColor="#000000"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="24sp"
+                        android:layout_marginTop="2dp"
+                        android:text="     -      " />
+                    <TextView
+                        android:id="@+id/gasif_date"
+                        android:textColor="#000000"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="24sp"
+                        android:background="#ffffff"
+                        android:layout_margin="2dp"
+                        android:text="날짜" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="서울시 유가 정보"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

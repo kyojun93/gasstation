@@ -40,7 +40,7 @@ public class map extends location {
             double b = Double.parseDouble(hash.get("y"));
             mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(b, a), 2, true);
         }
-        mapView.setDaumMapApiKey("ab6596f1398c73a74ab74acb9a8543c2");
+        mapView.setDaumMapApiKey("706ec6d42baa9e78485586178cd9e2e2");
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
         mark();
