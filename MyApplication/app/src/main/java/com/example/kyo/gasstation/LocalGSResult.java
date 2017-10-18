@@ -132,6 +132,7 @@ public class LocalGSResult extends AppCompatActivity implements View.OnClickList
         s = "http://124.80.191.179:3000/local/'"+local+"'/"+sort;
         Log.e("kyo",s);
         list.clear();
+        hashlist.clear();
         task = new GetData();
         task.execute(s);
     }
@@ -163,12 +164,12 @@ public class LocalGSResult extends AppCompatActivity implements View.OnClickList
             i = new Intent(this, LocalGS.class);
         } else if (id == R.id.nav_slideshow) {
             i = new Intent(this, CardIF.class);
-        } else if (id == R.id.nav_manage) {
-            i = new Intent(this, InterestGS.class);
-        }else if (id == R.id.nav_manage1) {
+        } else if (id == R.id.nav_manage1) {
             i = new Intent(this, GasIf.class);
         }else if (id == R.id.nav_manage2) {
             i = new Intent(this, map.class);
+            i.putExtra("hashlist", hashlist);
+            i.putExtra("center", -1);
         }
         startActivity(i);
         drawer.closeDrawer(GravityCompat.START);

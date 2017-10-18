@@ -44,13 +44,6 @@
             android:text="카드사\n혜택"
             android:textSize="20dp"/>
 
-        <Button
-            android:id="@+id/InterestGS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="관심\n주유소"
-            android:textSize="20dp"
-            />
 
         <Button
             android:id="@+id/GasIF"

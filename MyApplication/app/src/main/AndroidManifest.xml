@@ -33,7 +33,6 @@
         <activity android:name=".NearbyGS" />
         <activity android:name=".LocalGS" />
         <activity android:name=".CardIF" />
-        <activity android:name=".InterestGS" />
         <activity android:name=".GasIf" />
         <activity android:name=".map" />
         <activity

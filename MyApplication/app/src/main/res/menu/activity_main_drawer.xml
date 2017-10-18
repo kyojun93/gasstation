@@ -15,9 +15,6 @@
             android:id="@+id/nav_slideshow"
             android:title="카드사 혜택" />
         <item
-            android:id="@+id/nav_manage"
-            android:title="관심 주유소" />
-        <item
             android:id="@+id/nav_manage1"
             android:title="유가 정보" />
         <item

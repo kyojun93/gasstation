@@ -172,6 +172,7 @@ public class NearbyGS extends location implements View.OnClickListener, Navigati
         s = "http://124.80.191.179:3000/gasstation/"+userlocation.getLongitude()+"/"+userlocation.getLatitude()+"/"+km+"/"+oil+"/" + sort;
         Log.e("kyo",s);
         list.clear();
+        hashlist.clear();
         task = new GetData();
         task.execute(s);
     }
@@ -205,12 +206,12 @@ public class NearbyGS extends location implements View.OnClickListener, Navigati
             i = new Intent(this, LocalGS.class);
         } else if (id == R.id.nav_slideshow) {
             i = new Intent(this, CardIF.class);
-        } else if (id == R.id.nav_manage) {
-            i = new Intent(this, InterestGS.class);
-        }else if (id == R.id.nav_manage1) {
+        } else if (id == R.id.nav_manage1) {
             i = new Intent(this, GasIf.class);
         }else if (id == R.id.nav_manage2) {
             i = new Intent(this, map.class);
+            i.putExtra("hashlist", hashlist);
+            i.putExtra("center", -1);
         }
         startActivity(i);
         drawer.closeDrawer(GravityCompat.START);

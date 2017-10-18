@@ -9,14 +9,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class LocalGS extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class LocalGS extends MainActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     DrawerLayout drawer;
     Button Selectlocal, ok;
     Intent i;
@@ -88,12 +87,12 @@ public class LocalGS extends AppCompatActivity implements NavigationView.OnNavig
             i = new Intent(this, LocalGS.class);
         } else if (id == R.id.nav_slideshow) {
             i = new Intent(this, CardIF.class);
-        } else if (id == R.id.nav_manage) {
-            i = new Intent(this, InterestGS.class);
-        }else if (id == R.id.nav_manage1) {
+        } else if (id == R.id.nav_manage1) {
             i = new Intent(this, GasIf.class);
         }else if (id == R.id.nav_manage2) {
             i = new Intent(this, map.class);
+            i.putExtra("hashlist", hashlist);
+            i.putExtra("center", -1);
         }
         startActivity(i);
         drawer.closeDrawer(GravityCompat.START);

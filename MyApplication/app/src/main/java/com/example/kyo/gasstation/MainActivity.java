@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
     String s,mJsonString;
     GetData task;
     ArrayList <HashMap<String,String>> hashlist;
-    private Button LocalGS,InterestGS,NearbyGS,CardIF,GasIF;
+    private Button LocalGS,NearbyGS,CardIF,GasIF;
     DrawerLayout drawer;
     int REQUEST_CODE_LOCATION;
     @Override
@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity
         init();
         newurl();
         LocalGS.setOnClickListener(this);
-        InterestGS.setOnClickListener(this);
         CardIF.setOnClickListener(this);
         GasIF.setOnClickListener(this);
         NearbyGS.setOnClickListener(this);
@@ -86,9 +85,6 @@ public class MainActivity extends AppCompatActivity
                 case R.id.Card:
                     i = new Intent(MainActivity.this, CardIF.class);
                     break;
-            case R.id.InterestGS:
-                i = new Intent(MainActivity.this, InterestGS.class);
-                break;
             case R.id.GasIF:
                 i = new Intent(MainActivity.this, GasIf.class);
                 //i = new Intent(MainActivity.this, GasIf.class);
@@ -96,14 +92,13 @@ public class MainActivity extends AppCompatActivity
         }
         startActivity(i);
     }
-    public void init(){
+    private void init(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // 사용자 권한 요청
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
         }
         hashlist = new ArrayList<>();
         LocalGS=(Button)findViewById(R.id.LocalGS);
-        InterestGS=(Button)findViewById(R.id.InterestGS);
         NearbyGS=(Button)findViewById(R.id.NearbyGS);
         CardIF=(Button)findViewById(R.id.Card);
         GasIF=(Button)findViewById(R.id.GasIF);
@@ -127,9 +122,7 @@ public class MainActivity extends AppCompatActivity
             i = new Intent(this, LocalGS.class);
         } else if (id == R.id.nav_slideshow) {
             i = new Intent(this, CardIF.class);
-        } else if (id == R.id.nav_manage) {
-            i = new Intent(this, InterestGS.class);
-        }else if (id == R.id.nav_manage1) {
+        } else if (id == R.id.nav_manage1) {
             i = new Intent(this, GasIf.class);
         }else if (id == R.id.nav_manage2) {
             i = new Intent(this, map.class);
@@ -143,6 +136,7 @@ public class MainActivity extends AppCompatActivity
     public void newurl(){
         s = "http://124.80.191.179:3000/";
         Log.e("kyo",s);
+        hashlist.clear();
         task = new GetData();
         task.execute(s);
     }

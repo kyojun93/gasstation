@@ -103,12 +103,12 @@ public class gas_station_if extends location
             i = new Intent(this, LocalGS.class);
         } else if (id == R.id.nav_slideshow) {
             i = new Intent(this, CardIF.class);
-        } else if (id == R.id.nav_manage) {
-            i = new Intent(this, InterestGS.class);
-        }else if (id == R.id.nav_manage1) {
+        } else if (id == R.id.nav_manage1) {
             i = new Intent(this, GasIf.class);
         }else if (id == R.id.nav_manage2) {
             i = new Intent(this, map.class);
+            i.putExtra("hashlist", hashlist);
+            i.putExtra("center", -1);
         }
         startActivity(i);
         drawer.closeDrawer(GravityCompat.START);
