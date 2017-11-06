@@ -21,6 +21,7 @@ public class map extends location {
     MapView mapView;
     Location userLocation;
     Intent i;
+    double a,b;
     int pos;
     private LocationManager locationManager;
     ArrayList<HashMap<String, String>> hashlist;
@@ -36,8 +37,8 @@ public class map extends location {
         }else {
             HashMap<String, String> hash = new HashMap<>();
             hash = hashlist.get(pos);
-            double a = Double.parseDouble(hash.get("x"));
-            double b = Double.parseDouble(hash.get("y"));
+            a = Double.parseDouble(hash.get("x"));
+            b = Double.parseDouble(hash.get("y"));
             mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(b, a), 2, true);
         }
         mapView.setDaumMapApiKey("706ec6d42baa9e78485586178cd9e2e2");
@@ -58,16 +59,19 @@ public class map extends location {
         for(int i = 0; i < hashlist.size();i++) {
             HashMap<String, String> hash = new HashMap<>();
             hash = hashlist.get(i);
-            double a = Double.parseDouble(hash.get("x"));
-            double b = Double.parseDouble(hash.get("y"));
-            map = MapPoint.mapPointWithGeoCoord(b,a);
+            double x = Double.parseDouble(hash.get("x"));
+            double y = Double.parseDouble(hash.get("y"));
+            map = MapPoint.mapPointWithGeoCoord(y,x);
             MapPOIItem marker = new MapPOIItem();
             marker.setItemName(hash.get("name"));
             marker.setTag(0);
             marker.setMapPoint(map);
             marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);// 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.\
             mapView.addPOIItem(marker);
+            if(y == b && x == a) {
+                mapView.selectPOIItem(marker, true);
+            }
         }
     }
 }

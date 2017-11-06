@@ -84,6 +84,8 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case R.id.Card:
                     i = new Intent(MainActivity.this, CardIF.class);
+                    i.putExtra("hashlist", hashlist);
+                    i.putExtra("center", -1);
                     break;
             case R.id.GasIF:
                 i = new Intent(MainActivity.this, GasIf.class);
@@ -122,6 +124,8 @@ public class MainActivity extends AppCompatActivity
             i = new Intent(this, LocalGS.class);
         } else if (id == R.id.nav_slideshow) {
             i = new Intent(this, CardIF.class);
+            i.putExtra("hashlist", hashlist);
+            i.putExtra("center", -1);
         } else if (id == R.id.nav_manage1) {
             i = new Intent(this, GasIf.class);
         }else if (id == R.id.nav_manage2) {

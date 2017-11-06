@@ -8,4 +8,5 @@
     <string name="str_done">완료</string>
     <string name="title_activity_local_gsresult">LocalGSResult</string>
     <string name="title_activity_gas_station_if">gas_station_if</string>
+    <string name="title_activity_card_info">Card_info</string>
 </resources>

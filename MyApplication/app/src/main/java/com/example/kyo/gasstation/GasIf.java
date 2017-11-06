@@ -39,8 +39,9 @@ import static com.example.kyo.gasstation.R.id.gasif;
 
 public class GasIf extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     DrawerLayout drawer;
+    String ch;
     TextView oil, date, price;
-    Button gasolien, diesel, gasif_local;
+    Button gasolien, diesel, gasif_local,gasif_ch;
     GetData task;
     GraphView graph;
     int a = 0;
@@ -52,6 +53,7 @@ public class GasIf extends AppCompatActivity implements NavigationView.OnNavigat
             "서울 구로구", "서울 금천구", "서울 노원구", "서울 도봉구", "서울 동대문구", "서울 동작구", "서울 마포구",
             "서울 서대문구", "서울 서초구", "서울 성동구", "서울 성북구", "서울 송파구",
             "서울 양천구", "서울 영등포구", "서울 용산구", "서울 은평구", "서울 종로구", "서울 중구", "서울 중랑구"};
+    CharSequence asd[] = new CharSequence[]{"월별","분기별", "년별"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class GasIf extends AppCompatActivity implements NavigationView.OnNavigat
         diesel.setOnClickListener(this);
         gasolien.setOnClickListener(this);
         gasif_local.setOnClickListener(this);
+        gasif_ch.setOnClickListener(this);
     }
 
     public void init() {
@@ -81,10 +84,12 @@ public class GasIf extends AppCompatActivity implements NavigationView.OnNavigat
         gasolien = (Button) findViewById(R.id.btngasoline);
         diesel = (Button) findViewById(R.id.btndiesel);
         gasif_local = (Button) findViewById(R.id.gasif_local);
+        gasif_ch = (Button) findViewById(R.id.gasif_ch);
         hashlist = new ArrayList<>();
         quarterlist = new ArrayList<>();
         oil_str = "gasolien";
         oil_str2 = "gas";
+        ch = "_quarter";
         ok = true;
         newurl();
     }
@@ -116,6 +121,30 @@ public class GasIf extends AppCompatActivity implements NavigationView.OnNavigat
                     public void onClick(DialogInterface dialog, int which) {
                         gasif_local.setText(local[which]);
                         newurl2();
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
+                break;
+            case R.id.gasif_ch:
+                builder.setItems(asd, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        gasif_ch.setText(asd[which]);
+                        switch (which){
+                            case 0:
+                                ch = "_month";
+                                newurl2();
+                                break;
+                            case 1:
+                                ch = "_quarter";
+                                newurl2();
+                                break;
+                            case 2:
+                                ch = "_year";
+                                newurl2();
+                                break;
+                        }
                         dialog.dismiss();
                     }
                 });
@@ -173,7 +202,7 @@ public class GasIf extends AppCompatActivity implements NavigationView.OnNavigat
 
     public void newurl2() {
         ok = false;
-        s = "http://124.80.191.179:3000/kyo/'" + gasif_local.getText()+"'/" +  oil_str2;
+        s = "http://124.80.191.179:3000/kyo/'" + gasif_local.getText()+"'/" +  oil_str2 + "/" + ch;
         Log.e("kyo", s);
         quarterlist.clear();
         GetData task2 = new GetData();
@@ -271,13 +300,48 @@ public class GasIf extends AppCompatActivity implements NavigationView.OnNavigat
                     gashash.put("diesel", diesel);
                     hashlist.add(gashash);
                 }
-                else {
+                else if(ch.equals("_month")){
+                    Double QT1 = item.getDouble("12monAgoAvg");
+                    Double QT2 = item.getDouble("11monAgoAvg");
+                    Double QT3 = item.getDouble("10monAgoAvg");
+                    Double QT4 = item.getDouble("9monAgoAvg");
+                    Double QT5 = item.getDouble("8monAgoAvg");
+                    Double QT6 = item.getDouble("7monAgoAvg");
+                    Double QT7 = item.getDouble("6monAgoAvg");
+                    Double QT8 = item.getDouble("5monAgoAvg");
+                    Double QT9 = item.getDouble("4monAgoAvg");
+                    Double QT10 = item.getDouble("3monAgoAvg");
+                    Double QT11 = item.getDouble("2monAgoAvg");
+                    Double QT12 = item.getDouble("1monAgoAvg");
+
+                    LineGraphSeries series = new LineGraphSeries();
+                    //series.setThickness();
+                    DataPoint dp[] = new DataPoint[]{
+                            new DataPoint(1, QT12),
+                            new DataPoint(2, QT11),
+                            new DataPoint(3, QT10),
+                            new DataPoint(4, QT9),
+                            new DataPoint(5, QT8),
+                            new DataPoint(6, QT7),
+                            new DataPoint(7, QT6),
+                            new DataPoint(8, QT5),
+                            new DataPoint(9, QT4),
+                            new DataPoint(10, QT3),
+                            new DataPoint(11, QT2),
+                            new DataPoint(12, QT1)};
+                    series.resetData(dp);
+                    graph.getGridLabelRenderer().setNumHorizontalLabels(12);
+                    graph.setTitle(gasif_local.getText()+ " "+ gasif_ch.getText()+" 그래프");
+                    graph.removeAllSeries();
+                    graph.addSeries(series);
+                }
+                else if(ch.equals("_quarter")){
                     Double QT1 = item.getDouble("1qtAvg");
                     Double QT2 = item.getDouble("2qtAvg");
                     Double QT3 = item.getDouble("3qtAvg");
                     Double QT4 = item.getDouble("4qtAvg");
                     LineGraphSeries series = new LineGraphSeries();
-                    series.setThickness(4);
+                    //series.setThickness(4);
                     DataPoint dp[] = new DataPoint[]{
                             new DataPoint(1, QT1),
                             new DataPoint(2, QT2),
@@ -285,11 +349,28 @@ public class GasIf extends AppCompatActivity implements NavigationView.OnNavigat
                             new DataPoint(4, QT4)};
                     series.resetData(dp);
                     graph.getGridLabelRenderer().setNumHorizontalLabels(4);
-                    graph.setTitle(gasif_local.getText()+ " 분기별 그래프");
+                    graph.setTitle(gasif_local.getText()+ " "+ gasif_ch.getText()+" 그래프");
+                    graph.removeAllSeries();
+                    graph.addSeries(series);
+                }
+                else if(ch.equals("_year")){
+                    Double QT1 = item.getDouble("1yearAgoAvg");
+                    Double QT2 = item.getDouble("2yearAgoAvg");
+                    Double QT3 = item.getDouble("3yearAgoAvg");
+                    LineGraphSeries series = new LineGraphSeries();
+                    //series.setThickness(4);
+                    DataPoint dp[] = new DataPoint[]{
+                            new DataPoint(1, QT1),
+                            new DataPoint(2, QT2),
+                            new DataPoint(3, QT3)};
+                    series.resetData(dp);
+                    graph.getGridLabelRenderer().setNumHorizontalLabels(3);
+                    graph.setTitle(gasif_local.getText()+ " "+ gasif_ch.getText()+" 그래프");
                     graph.removeAllSeries();
                     graph.addSeries(series);
                 }
             }
+
 
         } catch (JSONException e) {
 

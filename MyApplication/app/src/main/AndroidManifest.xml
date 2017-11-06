@@ -42,7 +42,11 @@
         <activity
             android:name=".gas_station_if"
             android:label="@string/title_activity_gas_station_if"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Card_info"
+            android:label="@string/title_activity_card_info"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
