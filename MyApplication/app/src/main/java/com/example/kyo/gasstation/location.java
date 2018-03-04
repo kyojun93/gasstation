@@ -22,19 +22,19 @@ public class location extends AppCompatActivity {
     int REQUEST_CODE_LOCATION = 100;
     public Location getMyLocation() {
         Location currentLocation = null;
-        // Register the listener with the Location Manager to receive location updates
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
         }
         else {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
             // 수동으로 위치 구하기
-            String locationProvider = LocationManager.GPS_PROVIDER;
-            currentLocation = locationManager.getLastKnownLocation(locationProvider);
+            String locationProvider = LocationManager.GPS_PROVIDER;                     //gps정보값을 가져옴
+            currentLocation = locationManager.getLastKnownLocation(locationProvider);     //gps정보값을 저장
             if (currentLocation != null) {
-                double lng = currentLocation.getLongitude();
-                double lat = currentLocation.getLatitude();
+                double lng = currentLocation.getLongitude();                            //gps 경도 저장
+                double lat = currentLocation.getLatitude();                             //gps 위도 저장
                 Log.d("Main", "longtitude=" + lng + ", latitude=" + lat);
             }
         }

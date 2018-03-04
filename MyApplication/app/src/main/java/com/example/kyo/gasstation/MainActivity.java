@@ -138,8 +138,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
     public void newurl(){
-        s = "http://124.80.191.179:3000/";
-        Log.e("kyo",s);
+        s = "http://124.80.191.179:3000/";  //webserver주소
         hashlist.clear();
         task = new GetData();
         task.execute(s);
@@ -209,21 +208,22 @@ public class MainActivity extends AppCompatActivity
 
     private void showResult(){
         try {
-            JSONArray jsonArray = new JSONArray(mJsonString);
+            JSONArray jsonArray = new JSONArray(mJsonString);       //서버에서 받은 String형 JSON을
+                                                                    // JSONArray형태로 변환
 
-            for(int i=0;i<jsonArray.length();i++){
+            for(int i=0;i<jsonArray.length();i++){              //JSON형식을 읽어들임
 
                 JSONObject item = jsonArray.getJSONObject(i);
 
-                String x = Double.toString(item.getDouble("x"));
-                String y = Double.toString(item.getDouble("y"));
-                String name = item.getString("name");
+                String x = Double.toString(item.getDouble("x"));    //JSON의 태그x의 값을 읽어옴
+                String y = Double.toString(item.getDouble("y"));     //JSON의 태그y의 값을 읽어옴
+                String name = item.getString("name");                //JSON의 태그nmame의 값을 읽어옴
                 HashMap<String,String> gashash = new HashMap<>();
-                gashash.put("name", name);
+                gashash.put("name", name);                          //리스트에 뿌려주기 위한 Hash Map에 저장
                 gashash.put("x",x);
                 gashash.put("y",y);
 
-                hashlist.add(gashash);
+                hashlist.add(gashash);                              //리스트 추가
             }
 
         } catch (JSONException e) {

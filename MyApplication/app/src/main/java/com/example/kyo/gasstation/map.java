@@ -55,22 +55,22 @@ public class map extends location {
         pos = (Integer)i.getSerializableExtra("center");
 
     }
-    public void mark(){
+    public void mark(){     //다음 지도 마커표시하는 함수
         for(int i = 0; i < hashlist.size();i++) {
             HashMap<String, String> hash = new HashMap<>();
-            hash = hashlist.get(i);
+            hash = hashlist.get(i);                 //intent로 넘겨받은 데이터를 저장
             double x = Double.parseDouble(hash.get("x"));
             double y = Double.parseDouble(hash.get("y"));
-            map = MapPoint.mapPointWithGeoCoord(y,x);
+            map = MapPoint.mapPointWithGeoCoord(y,x);       //주유소의 위치를 저장
             MapPOIItem marker = new MapPOIItem();
-            marker.setItemName(hash.get("name"));
+            marker.setItemName(hash.get("name"));           //마커 이름을 주유소이름으로 저장
             marker.setTag(0);
-            marker.setMapPoint(map);
+            marker.setMapPoint(map);                        //저장된 주유소 위치를 마커에 저장
             marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);// 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.\
-            mapView.addPOIItem(marker);
-            if(y == b && x == a) {
-                mapView.selectPOIItem(marker, true);
+            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);// 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+            mapView.addPOIItem(marker);                     //마커 추가
+            if(y == b && x == a) {                          //리스트 선택된 주유소일 경우
+                mapView.selectPOIItem(marker, true);        //마커를 추가
             }
         }
     }
